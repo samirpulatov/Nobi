@@ -2,12 +2,14 @@ package org.Nobi.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
 
+@Component
 public class ListCommand extends CommandHandler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ListCommand.class);

@@ -41,6 +41,7 @@ public class TaskInputHandler {
         String body = IntStream.range(0, tasks.size())
                 .mapToObj(i ->(i+1) +". "+tasks.get(i))
                 .collect(Collectors.joining("\n"));
+        userStateService.setUserState(chatId, UserState.IDLE);
 
         return SendMessage.builder()
                 .chatId(chatId)
