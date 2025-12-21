@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.util.List;
+
 @Service
 public class StateRouter {
 
@@ -21,13 +23,13 @@ public class StateRouter {
         this.taskInputHandler = taskInputHandler;
     }
 
-    public BotApiMethod<?> route(Update update) {
+    public List<BotApiMethod<?>> route(Update update) {
         Long chatId = update.getMessage().getChatId();
         UserState userState = userStateService.getUserState(chatId);
 
         if(userState == UserState.WAITING_TASKS_INPUT) {
             LOGGER.info("Calling TaskInputHandler");
-            return taskInputHandler.handle(update);
+            return  taskInputHandler.handle(update);
         }
         return null;
 

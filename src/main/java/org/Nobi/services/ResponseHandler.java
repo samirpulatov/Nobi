@@ -47,9 +47,9 @@ public class ResponseHandler {
 
         userInitializer.initIfNeeded(update);
 
-        BotApiMethod<?> stateResponse = stateRouter.route(update);
+        List<BotApiMethod<?>> stateResponse = stateRouter.route(update);
         if (stateResponse != null) {
-            messageSender.execute(stateResponse);
+            stateResponse.forEach(messageSender::execute);
             return;
         }
 
