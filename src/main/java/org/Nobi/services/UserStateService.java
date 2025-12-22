@@ -1,11 +1,8 @@
 package org.Nobi.services;
 
-import org.Nobi.database.UserRepository;
+import org.Nobi.repository.UserRepository;
 import org.Nobi.enums.UserState;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserStateService {

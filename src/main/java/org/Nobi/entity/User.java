@@ -1,15 +1,13 @@
-package org.Nobi.dto;
+package org.Nobi.entity;
 
 import lombok.*;
 import org.Nobi.enums.UserRole;
 import org.Nobi.enums.UserState;
-import org.springframework.stereotype.Component;
-
-import java.awt.font.TextHitInfo;
 
 @Data
 @NoArgsConstructor
 public class User {
+    private Integer id;
     private  Long chat_id;
     private  String userName;
     private  String firstName;

@@ -3,10 +3,8 @@ package org.Nobi.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.Nobi.dto.ChatRequest;
-import org.Nobi.dto.ChatResponse;
-import org.Nobi.dto.Message;
-import org.Nobi.dto.TaskParsingResult;
+import org.Nobi.dto.*;
+import org.Nobi.enums.TaskStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -41,7 +39,7 @@ public class OpenAiService {
     }
 
 
-    public List<String> parseTasks(String userMessage) {
+    public List<TaskDto> parseTasks(String userMessage) {
 
         String prompt =
                 """
@@ -84,7 +82,14 @@ public class OpenAiService {
         try {
             TaskParsingResult result =
                     objectMapper.readValue(json_response, TaskParsingResult.class);
-            return result.tasks();
+            return result.tasks().stream()
+                    .map(text -> {
+                        TaskDto taskDto = new TaskDto();
+                        taskDto.setTaskDescription(text);
+                        taskDto.setTaskStatus(TaskStatus.IN_PROGRESS);
+                        return taskDto;
+                    })
+                    .toList();
         } catch (JsonProcessingException e) {
             return fallbackParse(userMessage);
         }
@@ -92,10 +97,16 @@ public class OpenAiService {
     }
 
 
-    private List<String> fallbackParse(String text) {
-        return Arrays.stream(text.split("\n"))
+    private List<TaskDto> fallbackParse(String text) {
+        return Arrays.stream(text.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isBlank())
+                .map(s -> {
+                    TaskDto taskDto = new TaskDto();
+                    taskDto.setTaskDescription(s);
+                    taskDto.setTaskStatus(TaskStatus.IN_PROGRESS);
+                    return taskDto;
+                })
                 .toList();
     }
 }

@@ -1,8 +1,9 @@
-package org.Nobi.database;
+package org.Nobi.repository;
 
-import org.Nobi.dto.User;
+import org.Nobi.entity.User;
 import org.Nobi.enums.UserRole;
 import org.Nobi.enums.UserState;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +17,7 @@ public class UserRepository {
 
     private final RowMapper<User> userRowMapper = (rs,rowNum) -> {
        var user = new User();
-       user.setChat_id(rs.getLong("chat_id"));
+       user.setId(rs.getInt("id"));
        return user;
     };
 
@@ -61,13 +62,13 @@ public class UserRepository {
         );
     }
 
-    public User getUser(Long chat_id) {
+    public @Nullable Integer getUserID(Long chat_id) {
         LOGGER.info("Retrieving User {}", chat_id);
         String sql =
                 """
-                SELECT chat_id FROM users WHERE chat_id = ?;
+                SELECT id FROM users WHERE chat_id = ?;
                 """;
-        return jdbcTemplate.queryForObject(sql,userRowMapper,chat_id);
+        return jdbcTemplate.queryForObject(sql,Integer.class,chat_id);
     }
 
     public UserState getUserState(Long chat_id) {

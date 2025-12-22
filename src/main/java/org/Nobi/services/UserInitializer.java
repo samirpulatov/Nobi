@@ -1,6 +1,6 @@
 package org.Nobi.services;
 
-import org.Nobi.dto.User;
+import org.Nobi.entity.User;
 import org.Nobi.enums.UserRole;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;

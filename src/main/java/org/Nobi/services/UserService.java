@@ -1,8 +1,7 @@
 package org.Nobi.services;
 
-import org.Nobi.database.UserRepository;
-import org.Nobi.dto.User;
-import org.Nobi.enums.UserState;
+import org.Nobi.repository.UserRepository;
+import org.Nobi.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +20,9 @@ public class UserService {
         return userRepository.existsByChatId(chat_id);
     }
 
+    public Integer getUserId(Long chat_id) {
+        return userRepository.getUserID(chat_id);
+    }
 
 
 }

@@ -1,9 +1,6 @@
 package org.Nobi.services;
 
 import org.Nobi.commands.*;
-import org.Nobi.dto.User;
-import org.Nobi.enums.UserRole;
-import org.Nobi.enums.UserState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
